@@ -1,0 +1,114 @@
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+ 
+public class TemperatureConverter extends JFrame {
+    private JTextField celsiusTextField;
+    private JTextField fahrenheitTextField;
+    private JTextField kelvinTextField;
+    private JLabel celsiusLabel;
+    private JLabel fahrenheitLabel;
+    private JLabel kelvinLabel;
+    private JButton convertButton;
+    private JPanel contentPane;
+    private JLabel headerLabel;
+    private JPanel panel1;
+ 
+    public TemperatureConverter() {
+        setTitle("Temperature Converter");
+        setResizable(false);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setBounds(100, 100, 551, 371);
+        setLocationRelativeTo(null);
+        contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+ 
+        panel1 = new JPanel();
+        panel1.setBounds(10, 11, 525, 118);
+        contentPane.add(panel1);
+        panel1.setLayout(null);
+ 
+        headerLabel = new JLabel("Temperature Converter");
+        headerLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        headerLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        headerLabel.setBounds(10, 11, 505, 96);
+        panel1.add(headerLabel);
+ 
+        celsiusLabel = new JLabel("Celsius");
+        celsiusLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        celsiusLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        celsiusLabel.setBounds(10, 140, 122, 23);
+        contentPane.add(celsiusLabel);
+ 
+        fahrenheitLabel = new JLabel("Fahrenheit");
+        fahrenheitLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        fahrenheitLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        fahrenheitLabel.setBounds(206, 140, 122, 23);
+        contentPane.add(fahrenheitLabel);
+ 
+        kelvinLabel = new JLabel("Kelvin");
+        kelvinLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        kelvinLabel.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        kelvinLabel.setBounds(402, 140, 122, 23);
+        contentPane.add(kelvinLabel);
+ 
+        celsiusTextField = new JTextField();
+        celsiusTextField.setHorizontalAlignment(SwingConstants.CENTER);
+        celsiusTextField.setBounds(10, 174, 122, 20);
+        contentPane.add(celsiusTextField);
+        celsiusTextField.setColumns(10);
+ 
+        fahrenheitTextField = new JTextField();
+        fahrenheitTextField.setHorizontalAlignment(SwingConstants.CENTER);
+        fahrenheitTextField.setColumns(10);
+        fahrenheitTextField.setBounds(206, 174, 122, 20);
+        contentPane.add(fahrenheitTextField);
+ 
+        kelvinTextField = new JTextField();
+        kelvinTextField.setHorizontalAlignment(SwingConstants.CENTER);
+        kelvinTextField.setColumns(10);
+        kelvinTextField.setBounds(402, 174, 122, 20);
+        contentPane.add(kelvinTextField);
+ 
+        convertButton = new JButton("Convert");
+        convertButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                double celsius, fahrenheit, kelvin;
+                celsius = Double.parseDouble(celsiusTextField.getText());
+                fahrenheit = Double.parseDouble(fahrenheitTextField.getText());
+                kelvin = Double.parseDouble(kelvinTextField.getText());
+ 
+                if (e.getSource() == convertButton) {
+                    if (!celsiusTextField.getText().isEmpty()) {
+                        fahrenheitTextField.setText(String.valueOf((celsius * 1.8) + 32));
+                        kelvinTextField.setText(String.valueOf(celsius + 273.15));
+                    } else if (!fahrenheitTextField.getText().isEmpty()) {
+                        celsiusTextField.setText(String.valueOf((fahrenheit - 32) / 1.8));
+                        kelvinTextField.setText(String.valueOf((fahrenheit + 459.67) * 0.55555555555));
+                    } else if (!kelvinTextField.getText().isEmpty()) {
+                        celsiusTextField.setText(String.valueOf(kelvin - 273.15));
+                        fahrenheitTextField.setText(String.valueOf((kelvin * 1.8) - 459.67));
+                    }
+                }
+            }
+        });
+        convertButton.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        convertButton.setBounds(10, 205, 514, 53);
+        contentPane.add(convertButton);
+    }
+ 
+    public static void main(String[] args) {
+        EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                try {
+                    TemperatureConverter frame = new TemperatureConverter();
+                    frame.setVisible(true);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+    }
+}
